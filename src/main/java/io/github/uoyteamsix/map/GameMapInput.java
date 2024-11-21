@@ -27,6 +27,7 @@ public class GameMapInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
+        // Pause/unpause game with P key
         if (keycode == Input.Keys.P) {
             if (gameTimer.isPaused()) {
                 gameTimer.resumeTime();
@@ -36,6 +37,7 @@ public class GameMapInput extends InputAdapter {
             }
             return true;
         }
+        // No other input allowed if game is paused
         if (!gameTimer.isPaused()) {
             // Allow deselecting the current prefab either by pressing escape, pressing a number out of range, or pressing
             // the same key again.

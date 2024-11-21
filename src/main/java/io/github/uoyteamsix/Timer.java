@@ -1,5 +1,8 @@
 package io.github.uoyteamsix;
 
+/**
+A class to track the time remaining in the game
+ */
 public class Timer {
 
     private float timeLeft;
@@ -10,6 +13,10 @@ public class Timer {
         this.isPaused = true;
     }
 
+    /**
+     * Runs down timer as game progresses
+     * @param deltaTime
+     */
     public void updateTime(float deltaTime) {
         if (!isPaused && timeLeft > 0) {
             timeLeft -= deltaTime;
@@ -23,13 +30,23 @@ public class Timer {
 
     public void resumeTime() { isPaused = false; }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
+    /**
+     *
+     * @return whether game is paused or not
+     */
+    public boolean isPaused() { return isPaused; }
 
+    /**
+     *
+     * @return whether game has ended
+     */
     public boolean isTimeEnded() {
         return timeLeft <= 0;
     }
 
+    /**
+     *
+     * @return amount of time left
+     */
     public float getTimeLeft() { return timeLeft; }
 }
