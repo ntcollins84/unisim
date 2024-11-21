@@ -26,14 +26,14 @@ public class GameScreen extends ScreenAdapter {
     private GameMap map;
     private GameMapInput mapInput;
     private MapRenderer mapRenderer;
-    private final Timer gameTimer;
+    private final GameTimer gameTimer;
 
     public GameScreen(AssetManager assetManager, CursorManager cursorManager) {
         this.assetManager = assetManager;
         this.cursorManager = cursorManager;
         batch = new SpriteBatch();
         cameraController = new CameraController();
-        gameTimer = new Timer(300f);
+        gameTimer = new GameTimer(300f);
         gameLogic = new GameLogic(gameTimer);
         uiStage = new UiStage(assetManager, gameLogic, gameTimer);
 

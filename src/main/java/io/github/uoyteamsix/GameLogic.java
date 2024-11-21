@@ -20,7 +20,7 @@ public class GameLogic {
     private float remainingTime;
     private float nextBuildingTime;
     private boolean gameOver;
-    private final Timer gameTimer;
+    private final GameTimer gameTimer;
 
     // Satisfaction.
     private float satisfaction;
@@ -33,7 +33,7 @@ public class GameLogic {
     private float checkEventTimer;
     private float eventDurationTimer;
 
-    public GameLogic(Timer gameTimer) {
+    public GameLogic(GameTimer gameTimer) {
         this.gameTimer = gameTimer;
         nextBuildingTime = 0.0f;
         currentEvent = GameEvent.NONE;

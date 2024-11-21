@@ -3,12 +3,12 @@ package io.github.uoyteamsix;
 /**
 A class to track the time remaining in the game
  */
-public class Timer {
+public class GameTimer {
 
     private float timeLeft;
     private boolean isPaused;
 
-    public Timer (float timeLeft) {
+    public GameTimer (float timeLeft) {
         this.timeLeft = timeLeft;
         this.isPaused = true;
     }

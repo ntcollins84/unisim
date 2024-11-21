@@ -8,23 +8,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import io.github.uoyteamsix.GameLogic;
-import io.github.uoyteamsix.Timer;
+import io.github.uoyteamsix.GameTimer;
 
 /**
  * A class to represent the game timer UI element.
  */
-public class GameTimer extends Table {
+public class TimerDisplay extends Table {
     // Multiplier for the background image size.
     // TODO: Make configurable in settings.
     private static final float IMAGE_SCALE = 3.0f;
 
     private final UiAssets uiAssets;
     private final GameLogic gameLogic;
-    private Timer gameTimer;
+    private final GameTimer gameTimer;
     private Label timeLabel;
     private Image backgroundImage;
 
-    public GameTimer(UiAssets uiAssets, GameLogic gameLogic, Timer gameTimer) {
+    public TimerDisplay(UiAssets uiAssets, GameLogic gameLogic, GameTimer gameTimer) {
         this.uiAssets = uiAssets;
         this.gameLogic = gameLogic;
         this.gameTimer = gameTimer;
