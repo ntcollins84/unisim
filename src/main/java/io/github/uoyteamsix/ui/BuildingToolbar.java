@@ -39,40 +39,11 @@ public class BuildingToolbar extends Stack {
 
         // Create children when assets have loaded.
         if (backgroundImages.isEmpty() && uiAssets.hasSpritesheetLoaded() && uiAssets.hasFontsLoaded()) {
-            // Create a drawable for the tooltip box and give it some padding as otherwise the text intersects the edge
-            // of the box.
-            var tooltipBoxTexture = new TextureRegion(uiAssets.getSpritesheet(), 320, 32, 64, 32);
-            var tooltipBoxDrawable = new TextureRegionDrawable(tooltipBoxTexture);
-            tooltipBoxDrawable.setPadding(5.0f, 8.0f, 5.0f, 8.0f);
-
-            // Create a tooltip style.
-            var tooltipLabelStyle = new Label.LabelStyle(uiAssets.getSmallFont(), Color.BLACK);
-            var tooltipStyle = new TextTooltip.TextTooltipStyle(tooltipLabelStyle, tooltipBoxDrawable);
-
+            var tooltipStyle = createToolTip();
             var textureRegion = new TextureRegion(uiAssets.getSpritesheet(), 32, 160, 32, 32);
-            for (var prefab : gameLogic.getGameMap().getAvailablePrefabs()) {
-                final int index = gameLogic.getGameMap().getAvailablePrefabs().indexOf(prefab);
-                var image = new Image(textureRegion);
-                image.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        gameLogic.setSelectedPrefabIndex(index);
-                    }
-                });
 
-                // Add tooltip to display on image hover.
-                var tooltip = new TextTooltip(prefab.getName(), tooltipStyle);
-                tooltip.setInstant(true);
-                image.addListener(tooltip);
-
-                backgroundImages.add(image);
-            }
-
-            // Create next building time label.
-            var timeLabelStyle = new Label.LabelStyle(uiAssets.getLargeFont(), Color.BLACK);
-            nextBuildingTimeLabel = new Label("", timeLabelStyle);
-            nextBuildingTimeLabel.setAlignment(Align.center);
-            selectionBoxTexture = new TextureRegion(uiAssets.getSpritesheet(), 384, 32, 32, 32);
+            populateToolTip(tooltipStyle, textureRegion);
+            createBuildTimeLabel();
 
             // Add toolbar table to the stack, and add the background images to the table.
             add(toolbarTable);
@@ -132,5 +103,45 @@ public class BuildingToolbar extends Stack {
         var image = backgroundImages.get(prefabIndex);
         var coords = image.localToScreenCoordinates(new Vector2(0, 0));
         batch.draw(selectionBoxTexture, coords.x, Gdx.graphics.getHeight() - coords.y, 64.0f, 64.0f);
+    }
+
+    private TextTooltip.TextTooltipStyle createToolTip() {
+        // Create a drawable for the tooltip box and give it some padding as otherwise the text intersects the edge
+        // of the box.
+        var tooltipBoxTexture = new TextureRegion(uiAssets.getSpritesheet(), 320, 32, 64, 32);
+        var tooltipBoxDrawable = new TextureRegionDrawable(tooltipBoxTexture);
+        tooltipBoxDrawable.setPadding(5.0f, 8.0f, 5.0f, 8.0f);
+
+        // Create a tooltip style.
+        var tooltipLabelStyle = new Label.LabelStyle(uiAssets.getSmallFont(), Color.BLACK);
+        return new TextTooltip.TextTooltipStyle(tooltipLabelStyle, tooltipBoxDrawable);
+    }
+
+    private void populateToolTip(TextTooltip.TextTooltipStyle tooltipStyle,
+                                 TextureRegion textureRegion) {
+        for (var prefab : gameLogic.getGameMap().getAvailablePrefabs()) {
+            final int index = gameLogic.getGameMap().getAvailablePrefabs().indexOf(prefab);
+            var image = new Image(textureRegion);
+            image.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    gameLogic.setSelectedPrefabIndex(index);
+                }
+            });
+
+            // Add tooltip to display on image hover.
+            var tooltip = new TextTooltip(prefab.getName(), tooltipStyle);
+            tooltip.setInstant(true);
+            image.addListener(tooltip);
+
+            backgroundImages.add(image);
+        }
+    }
+
+    private void createBuildTimeLabel() {
+        var timeLabelStyle = new Label.LabelStyle(uiAssets.getLargeFont(), Color.BLACK);
+        nextBuildingTimeLabel = new Label("", timeLabelStyle);
+        nextBuildingTimeLabel.setAlignment(Align.center);
+        selectionBoxTexture = new TextureRegion(uiAssets.getSpritesheet(), 384, 32, 32, 32);
     }
 }
