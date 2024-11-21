@@ -26,6 +26,7 @@ public class GameScreen extends ScreenAdapter {
     private GameMap map;
     private GameMapInput mapInput;
     private MapRenderer mapRenderer;
+    private Timer gameTimer;
 
     public GameScreen(AssetManager assetManager, CursorManager cursorManager) {
         this.assetManager = assetManager;
@@ -33,7 +34,8 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         cameraController = new CameraController();
         gameLogic = new GameLogic();
-        uiStage = new UiStage(assetManager, gameLogic);
+        gameTimer = new Timer(300f);
+        uiStage = new UiStage(assetManager, gameLogic, gameTimer);
 
         // Create an input multiplexer to chain together our input adapters.
         // Add the UI stage first, then the camera controller.
@@ -65,6 +67,7 @@ public class GameScreen extends ScreenAdapter {
 
         // Update camera, game logic, and UI.
         cameraController.update(deltaTime);
+        gameTimer.updateTime(deltaTime);
         gameLogic.update(deltaTime);
         uiStage.act(deltaTime);
 

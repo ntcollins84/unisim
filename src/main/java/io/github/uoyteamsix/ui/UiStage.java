@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.uoyteamsix.GameLogic;
+import io.github.uoyteamsix.Timer;
 
 /**
  * A class which holds all the UI elements.
@@ -13,7 +14,7 @@ import io.github.uoyteamsix.GameLogic;
 public class UiStage extends Stage {
     private final UiAssets assets;
 
-    public UiStage(AssetManager assetManager, GameLogic gameLogic) {
+    public UiStage(AssetManager assetManager, GameLogic gameLogic, Timer gameTimer) {
         // The UI spans the whole screen.
         super(new ScreenViewport());
         assets = new UiAssets(assetManager);
@@ -25,7 +26,7 @@ public class UiStage extends Stage {
 
         // Create a table anchored to the top left for the timer and stats.
         var topLeftTable = new Table();
-        topLeftTable.add(new GameTimer(assets, gameLogic));
+        topLeftTable.add(new GameTimer(assets, gameLogic, gameTimer));
         topLeftTable.row();
         topLeftTable.add(new BuildingStatsBox(assets, gameLogic));
         topLeftTable.row();

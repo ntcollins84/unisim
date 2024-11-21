@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import io.github.uoyteamsix.GameLogic;
+import io.github.uoyteamsix.Timer;
 
 /**
  * A class to represent the game timer UI element.
@@ -19,12 +20,14 @@ public class GameTimer extends Table {
 
     private final UiAssets uiAssets;
     private final GameLogic gameLogic;
+    private Timer gameTimer;
     private Label timeLabel;
     private Image backgroundImage;
 
-    public GameTimer(UiAssets uiAssets, GameLogic gameLogic) {
+    public GameTimer(UiAssets uiAssets, GameLogic gameLogic, Timer gameTimer) {
         this.uiAssets = uiAssets;
         this.gameLogic = gameLogic;
+        this.gameTimer = gameTimer;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class GameTimer extends Table {
         super.act(delta);
 
         // Convert time in seconds to minutes and seconds.
-        float remainingTime = gameLogic.getRemainingTime();
+        float remainingTime = gameTimer.getTimeLeft();
         int minutes = (int) (remainingTime / 60.0f);
         int seconds = ((int) remainingTime) % 60;
         if (timeLabel != null) {

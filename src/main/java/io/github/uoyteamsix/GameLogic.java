@@ -127,11 +127,13 @@ public class GameLogic {
             return;
         }
 
+        /*
         // Update timers.
         remainingTime -= deltaTime;
         if (remainingTime < 0.0f) {
             gameOver = true;
         }
+        */
         nextBuildingTime -= deltaTime;
         if (nextBuildingTime < 0.0f) {
             // User can place another building.
