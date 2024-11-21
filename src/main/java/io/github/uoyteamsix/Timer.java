@@ -7,7 +7,7 @@ public class Timer {
 
     public Timer (float timeLeft) {
         this.timeLeft = timeLeft;
-        this.isPaused = false;
+        this.isPaused = true;
     }
 
     public void updateTime(float deltaTime) {
@@ -22,6 +22,10 @@ public class Timer {
     public void pauseTime() { isPaused = true; }
 
     public void resumeTime() { isPaused = false; }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
 
     public boolean isTimeEnded() {
         return timeLeft <= 0;

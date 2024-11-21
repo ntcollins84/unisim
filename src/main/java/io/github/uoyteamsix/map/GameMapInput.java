@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
 import io.github.uoyteamsix.CameraController;
 import io.github.uoyteamsix.GameLogic;
+import io.github.uoyteamsix.Timer;
 
 /**
  * A class which handles user input events on the game map.
@@ -13,12 +14,14 @@ public class GameMapInput extends InputAdapter {
     private final GameMap map;
     private final GameLogic gameLogic;
     private final CameraController cameraController;
+    private Timer gameTimer;
     private int selectedTileX = -1;
     private int selectedTileY = -1;
 
-    public GameMapInput(GameMap map, GameLogic gameLogic, CameraController cameraController) {
+    public GameMapInput(GameMap map, GameLogic gameLogic, Timer gameTimer, CameraController cameraController) {
         this.map = map;
         this.gameLogic = gameLogic;
+        this.gameTimer = gameTimer;
         this.cameraController = cameraController;
     }
 
@@ -36,6 +39,15 @@ public class GameMapInput extends InputAdapter {
                 gameLogic.setSelectedPrefabIndex(-1);
             } else if (gameLogic.canPlaceBuilding()) {
                 gameLogic.setSelectedPrefabIndex(index);
+            }
+            return true;
+        }
+        if (keycode == Input.Keys.P) {
+            if (gameTimer.isPaused()) {
+                gameTimer.resumeTime();
+            }
+            else {
+                gameTimer.pauseTime();
             }
             return true;
         }

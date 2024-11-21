@@ -98,7 +98,7 @@ public class GameScreen extends ScreenAdapter {
             gameLogic.setMap(map);
 
             // Add input handler for map.
-            mapInput = new GameMapInput(map, gameLogic, cameraController);
+            mapInput = new GameMapInput(map, gameLogic, gameTimer, cameraController);
             ((InputMultiplexer) Gdx.input.getInputProcessor()).addProcessor(mapInput);
         } catch (Exception e) {
             Gdx.app.error("GameScreen", "Failed to initialize the map renderer: " + e.getMessage());
