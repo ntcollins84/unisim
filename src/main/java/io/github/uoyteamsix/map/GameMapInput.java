@@ -14,7 +14,7 @@ public class GameMapInput extends InputAdapter {
     private final GameMap map;
     private final GameLogic gameLogic;
     private final CameraController cameraController;
-    private Timer gameTimer;
+    private final Timer gameTimer;
     private int selectedTileX = -1;
     private int selectedTileY = -1;
 
@@ -27,21 +27,6 @@ public class GameMapInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        // Allow deselecting the current prefab either by pressing escape, pressing a number out of range, or pressing
-        // the same key again.
-        if (keycode == Input.Keys.ESCAPE) {
-            gameLogic.setSelectedPrefabIndex(-1);
-            return true;
-        }
-        if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
-            int index = keycode - Input.Keys.NUM_1;
-            if (index == gameLogic.getSelectedPrefabIndex()) {
-                gameLogic.setSelectedPrefabIndex(-1);
-            } else if (gameLogic.canPlaceBuilding()) {
-                gameLogic.setSelectedPrefabIndex(index);
-            }
-            return true;
-        }
         if (keycode == Input.Keys.P) {
             if (gameTimer.isPaused()) {
                 gameTimer.resumeTime();
@@ -50,6 +35,23 @@ public class GameMapInput extends InputAdapter {
                 gameTimer.pauseTime();
             }
             return true;
+        }
+        if (!gameTimer.isPaused()) {
+            // Allow deselecting the current prefab either by pressing escape, pressing a number out of range, or pressing
+            // the same key again.
+            if (keycode == Input.Keys.ESCAPE) {
+                gameLogic.setSelectedPrefabIndex(-1);
+                return true;
+            }
+            if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
+                int index = keycode - Input.Keys.NUM_1;
+                if (index == gameLogic.getSelectedPrefabIndex()) {
+                    gameLogic.setSelectedPrefabIndex(-1);
+                } else if (gameLogic.canPlaceBuilding()) {
+                    gameLogic.setSelectedPrefabIndex(index);
+                }
+                return true;
+            }
         }
         return false;
     }

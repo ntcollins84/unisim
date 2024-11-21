@@ -26,15 +26,15 @@ public class GameScreen extends ScreenAdapter {
     private GameMap map;
     private GameMapInput mapInput;
     private MapRenderer mapRenderer;
-    private Timer gameTimer;
+    private final Timer gameTimer;
 
     public GameScreen(AssetManager assetManager, CursorManager cursorManager) {
         this.assetManager = assetManager;
         this.cursorManager = cursorManager;
         batch = new SpriteBatch();
         cameraController = new CameraController();
-        gameLogic = new GameLogic();
         gameTimer = new Timer(300f);
+        gameLogic = new GameLogic(gameTimer);
         uiStage = new UiStage(assetManager, gameLogic, gameTimer);
 
         // Create an input multiplexer to chain together our input adapters.

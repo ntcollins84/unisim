@@ -20,6 +20,7 @@ public class GameLogic {
     private float remainingTime;
     private float nextBuildingTime;
     private boolean gameOver;
+    private final Timer gameTimer;
 
     // Satisfaction.
     private float satisfaction;
@@ -32,8 +33,8 @@ public class GameLogic {
     private float checkEventTimer;
     private float eventDurationTimer;
 
-    public GameLogic() {
-        remainingTime = TOTAL_GAME_TIME;
+    public GameLogic(Timer gameTimer) {
+        this.gameTimer = gameTimer;
         nextBuildingTime = 0.0f;
         currentEvent = GameEvent.NONE;
     }
@@ -134,37 +135,40 @@ public class GameLogic {
             gameOver = true;
         }
         */
-        nextBuildingTime -= deltaTime;
-        if (nextBuildingTime < 0.0f) {
-            // User can place another building.
-            maximumAllowedBuildings++;
-            nextBuildingTime = BUILDING_TIME;
-        }
 
-        // Update satisfaction.
-        updateSatisfaction(deltaTime);
+        if (!gameTimer.isPaused()) {
+            nextBuildingTime -= deltaTime;
+            if (nextBuildingTime < 0.0f) {
+                // User can place another building.
+                maximumAllowedBuildings++;
+                nextBuildingTime = BUILDING_TIME;
+            }
 
-        // Tick event duration timer.
-        if (currentEvent != GameEvent.NONE) {
-            eventDurationTimer -= deltaTime;
-        }
-        if (eventDurationTimer < 0.0f) {
-            currentEvent = GameEvent.NONE;
-        }
-        if (currentEvent != GameEvent.NONE) {
-            return;
-        }
+            // Update satisfaction.
+            updateSatisfaction(deltaTime);
 
-        // Generate a random number every 2 seconds to see if we should start an event. Bias the random number slightly
-        // to prevent events from happening to close to each other.
-        nextEventProbability += deltaTime * 0.01f;
-        checkEventTimer += deltaTime;
-        if (checkEventTimer > 2.0f) {
-            checkEventTimer = 0.0f;
-            if (Math.min(MathUtils.random() + 0.1f, 1.0f) < nextEventProbability) {
-                nextEventProbability = 0;
-                currentEvent = GameEvent.values()[MathUtils.random(GameEvent.values().length - 1)];
-                eventDurationTimer = MathUtils.random(15.0f, 45.0f);
+            // Tick event duration timer.
+            if (currentEvent != GameEvent.NONE) {
+                eventDurationTimer -= deltaTime;
+            }
+            if (eventDurationTimer < 0.0f) {
+                currentEvent = GameEvent.NONE;
+            }
+            if (currentEvent != GameEvent.NONE) {
+                return;
+            }
+
+            // Generate a random number every 2 seconds to see if we should start an event. Bias the random number slightly
+            // to prevent events from happening to close to each other.
+            nextEventProbability += deltaTime * 0.01f;
+            checkEventTimer += deltaTime;
+            if (checkEventTimer > 2.0f) {
+                checkEventTimer = 0.0f;
+                if (Math.min(MathUtils.random() + 0.1f, 1.0f) < nextEventProbability) {
+                    nextEventProbability = 0;
+                    currentEvent = GameEvent.values()[MathUtils.random(GameEvent.values().length - 1)];
+                    eventDurationTimer = MathUtils.random(15.0f, 45.0f);
+                }
             }
         }
     }
