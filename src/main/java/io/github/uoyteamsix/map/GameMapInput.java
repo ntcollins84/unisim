@@ -27,6 +27,7 @@ public class GameMapInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
+        // New function: pause
         // Pause/unpause game with P key
         if (keycode == Input.Keys.P) {
             if (gameTimer.isPaused()) {

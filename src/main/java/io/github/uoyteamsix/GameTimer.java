@@ -1,7 +1,7 @@
 package io.github.uoyteamsix;
 
 /**
-A class to track the time remaining in the game
+ * A class to track the time remaining in the game
  */
 public class GameTimer {
 
@@ -15,7 +15,7 @@ public class GameTimer {
 
     /**
      * Runs down timer as game progresses
-     * @param deltaTime
+     * @param deltaTime time since game last rendered
      */
     public void updateTime(float deltaTime) {
         if (!isPaused && timeLeft > 0) {

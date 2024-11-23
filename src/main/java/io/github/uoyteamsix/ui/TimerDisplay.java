@@ -12,6 +12,7 @@ import io.github.uoyteamsix.GameTimer;
 
 /**
  * A class to represent the game timer UI element.
+ * Renamed from GameTimer
  */
 public class TimerDisplay extends Table {
     // Multiplier for the background image size.

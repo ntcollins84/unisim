@@ -136,6 +136,7 @@ public class GameLogic {
         }
         */
 
+        // Other ingame timers now rely on GameTimer
         if (!gameTimer.isPaused()) {
             nextBuildingTime -= deltaTime;
             if (nextBuildingTime < 0.0f) {
