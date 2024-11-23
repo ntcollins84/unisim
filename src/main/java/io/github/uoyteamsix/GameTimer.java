@@ -1,16 +1,18 @@
 package io.github.uoyteamsix;
 
 /**
- * A class to track the time remaining in the game
+ * A class to track the time remaining in the game or in an event
+ * Replaces timer variable in GameLogic
  */
 public class GameTimer {
 
     private float timeLeft;
     private boolean isPaused;
 
-    public GameTimer (float timeLeft) {
+    public GameTimer (float timeLeft, boolean startsPaused) {
         this.timeLeft = timeLeft;
-        this.isPaused = true;
+        // Main game starts paused, events do not
+        this.isPaused = startsPaused;
     }
 
     /**
