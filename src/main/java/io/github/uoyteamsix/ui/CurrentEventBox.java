@@ -73,7 +73,7 @@ public class CurrentEventBox extends Table {
                     descriptionLabel.setText(String.format("Satisfaction %s",
                             currentEvent.getSatisfactionEffect() < 0 ? "-" : "+"));
                 }
-            } else {
+            } else { // No event active
                 eventLabel.setText("Event: None");
                 descriptionLabel.setText("");
                 timeLabel.setText("");
