@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import io.github.uoyteamsix.GameEvent;
 import io.github.uoyteamsix.GameLogic;
 
 /**
@@ -54,8 +55,30 @@ public class CurrentEventBox extends Table {
         }
 
         if (eventLabel != null) {
-            timeLabel.setText(String.format("%d", (int) gameLogic.getEventDurationTimer()));
-            switch (gameLogic.getCurrentEvent()) {
+            // Get current event
+            GameEvent currentEvent = gameLogic.getCurrentEvent();
+            if (currentEvent != null) {
+                // Display event name and time left
+                timeLabel.setText(String.format("%d", (int) currentEvent.timer.getTimeLeft()));
+                eventLabel.setText(String.format("Event: %s", currentEvent.getName()));
+                // If event affects study deficit
+                if (currentEvent.affectsStudy()) {
+                    descriptionLabel.setText("Study -");
+                }
+                // Trick event
+                else if (currentEvent.getSatisfactionEffect() == 0) {
+                    descriptionLabel.setText("");
+                } else {
+                    // Display if event is positive or negative
+                    descriptionLabel.setText(String.format("Satisfaction %s",
+                            currentEvent.getSatisfactionEffect() < 0 ? "-" : "+"));
+                }
+            } else {
+                eventLabel.setText("Event: None");
+                descriptionLabel.setText("");
+                timeLabel.setText("");
+            }
+            /*switch (gameLogic.getCurrentEvent()) {
                 case NONE:
                     eventLabel.setText("Event: None");
                     descriptionLabel.setText("");
@@ -73,7 +96,8 @@ public class CurrentEventBox extends Table {
                     eventLabel.setText("Event: Strike");
                     descriptionLabel.setText("Study -");
                     break;
-            }
+            }*/
+
         }
     }
 }
