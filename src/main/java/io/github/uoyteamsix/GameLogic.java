@@ -214,7 +214,7 @@ public class GameLogic {
 
     /*public float getRemainingTime() { return remainingTime; }*/
 
-    public float getNextBuildingTime() { return nextBuildingTime: }
+    public float getNextBuildingTime() { return nextBuildingTime; }
 
     public float getSatisfaction() { return satisfaction; }
 
