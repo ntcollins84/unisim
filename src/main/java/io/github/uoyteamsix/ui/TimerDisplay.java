@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import io.github.uoyteamsix.GameLogic;
 import io.github.uoyteamsix.GameTimer;
 
 /**
@@ -20,14 +19,12 @@ public class TimerDisplay extends Table {
     private static final float IMAGE_SCALE = 3.0f;
 
     private final UiAssets uiAssets;
-    private final GameLogic gameLogic;
     private final GameTimer gameTimer;
     private Label timeLabel;
     private Image backgroundImage;
 
-    public TimerDisplay(UiAssets uiAssets, GameLogic gameLogic, GameTimer gameTimer) {
+    public TimerDisplay(UiAssets uiAssets, GameTimer gameTimer) {
         this.uiAssets = uiAssets;
-        this.gameLogic = gameLogic;
         this.gameTimer = gameTimer;
     }
 

@@ -9,7 +9,7 @@ import io.github.uoyteamsix.map.GameMap;
  * satisfaction and score.
  */
 public class GameLogic {
-    private static final float TOTAL_GAME_TIME = 5.0f * 60.0f;
+    //private static final float TOTAL_GAME_TIME = 5.0f * 60.0f;
     private static final float BUILDING_TIME = 20.0f;
 
     private GameMap gameMap;
@@ -17,7 +17,7 @@ public class GameLogic {
     private int selectedPrefabIndex = -1;
 
     // Timers.
-    private float remainingTime;
+    //private float remainingTime;
     private float nextBuildingTime;
     private boolean gameOver;
     private final GameTimer gameTimer;
@@ -212,23 +212,13 @@ public class GameLogic {
         return selectedPrefabIndex;
     }
 
-    public float getRemainingTime() {
-        return remainingTime;
-    }
+    /*public float getRemainingTime() { return remainingTime; }*/
 
-    public float getNextBuildingTime() {
-        return nextBuildingTime;
-    }
+    public float getNextBuildingTime() { return nextBuildingTime: }
 
-    public float getSatisfaction() {
-        return satisfaction;
-    }
+    public float getSatisfaction() { return satisfaction; }
 
-    public GameEvent getCurrentEvent() {
-        return currentEvent;
-    }
+    public GameEvent getCurrentEvent() { return currentEvent; }
 
-    public float getEventDurationTimer() {
-        return eventDurationTimer;
-    }
+    public float getEventDurationTimer() { return eventDurationTimer;}
 }

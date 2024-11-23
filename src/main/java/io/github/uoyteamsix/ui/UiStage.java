@@ -26,7 +26,7 @@ public class UiStage extends Stage {
 
         // Create a table anchored to the top left for the timer and stats.
         var topLeftTable = new Table();
-        topLeftTable.add(new TimerDisplay(assets, gameLogic, gameTimer));
+        topLeftTable.add(new TimerDisplay(assets, gameTimer));
         topLeftTable.row();
         topLeftTable.add(new BuildingStatsBox(assets, gameLogic));
         topLeftTable.row();
