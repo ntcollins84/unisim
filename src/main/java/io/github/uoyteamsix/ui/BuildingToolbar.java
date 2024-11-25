@@ -61,7 +61,8 @@ public class BuildingToolbar extends Stack {
                 });
 
                 // Add tooltip to display on image hover.
-                var tooltip = new TextTooltip(prefab.getName(), tooltipStyle);
+                // Tooltip does not display numbers in prefab name
+                var tooltip = new TextTooltip(prefab.getName().replaceAll("\\d",""), tooltipStyle);
                 tooltip.setInstant(true);
                 image.addListener(tooltip);
 

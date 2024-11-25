@@ -26,14 +26,16 @@ public class GameScreen extends ScreenAdapter {
     private GameMap map;
     private GameMapInput mapInput;
     private MapRenderer mapRenderer;
+    private final GameTimer gameTimer;
 
     public GameScreen(AssetManager assetManager, CursorManager cursorManager) {
         this.assetManager = assetManager;
         this.cursorManager = cursorManager;
         batch = new SpriteBatch();
         cameraController = new CameraController();
-        gameLogic = new GameLogic();
-        uiStage = new UiStage(assetManager, gameLogic);
+        gameTimer = new GameTimer(300f, true);
+        gameLogic = new GameLogic(gameTimer);
+        uiStage = new UiStage(assetManager, gameLogic, gameTimer);
 
         // Create an input multiplexer to chain together our input adapters.
         // Add the UI stage first, then the camera controller.
@@ -65,6 +67,7 @@ public class GameScreen extends ScreenAdapter {
 
         // Update camera, game logic, and UI.
         cameraController.update(deltaTime);
+        gameTimer.updateTime(deltaTime);
         gameLogic.update(deltaTime);
         uiStage.act(deltaTime);
 
@@ -95,7 +98,7 @@ public class GameScreen extends ScreenAdapter {
             gameLogic.setMap(map);
 
             // Add input handler for map.
-            mapInput = new GameMapInput(map, gameLogic, cameraController);
+            mapInput = new GameMapInput(map, gameLogic, gameTimer, cameraController);
             ((InputMultiplexer) Gdx.input.getInputProcessor()).addProcessor(mapInput);
         } catch (Exception e) {
             Gdx.app.error("GameScreen", "Failed to initialize the map renderer: " + e.getMessage());

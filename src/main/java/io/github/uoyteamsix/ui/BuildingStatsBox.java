@@ -10,6 +10,7 @@ import io.github.uoyteamsix.GameLogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class which represents the building counter UI element.
@@ -58,11 +59,16 @@ public class BuildingStatsBox extends Table {
         }
 
         // Update label text.
+        // Recreation buildings only have one label for two types of building
         if (!labels.isEmpty()) {
             var map = gameLogic.getGameMap();
-            for (int i = 0; i < map.getAvailablePrefabs().size(); i++) {
+            for (int i = 0; i < map.getAvailablePrefabs().size() - 1; i++) {
                 var prefab = map.getAvailablePrefabs().get(i);
                 var count = map.getBuildingCount(prefab);
+                if (Objects.equals(prefab.getName(), "Recreation")) {
+                    var recPrefab = map.getAvailablePrefabs().get(i + 1);
+                    count += map.getBuildingCount(recPrefab);
+                }
                 labels.get(i).setText(String.format("%s: %d", prefab.getName(), count));
             }
         }
