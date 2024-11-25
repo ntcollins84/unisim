@@ -16,7 +16,7 @@ public class GameEvent {
     private final ArrayList[] EVENTS = {
             new ArrayList<Object>(Arrays.asList("Rain", -1, false)),
             new ArrayList<Object>(Arrays.asList("Roses", 1, false)),
-            new ArrayList<Object>(Arrays.asList("Rain", 0, true)),
+            new ArrayList<Object>(Arrays.asList("Strike", 0, true)),
     };
 
     private String name;
