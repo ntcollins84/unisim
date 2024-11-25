@@ -17,6 +17,7 @@ import io.github.uoyteamsix.ui.UiStage;
  * A class representing the main gameplay screen.
  */
 public class GameScreen extends ScreenAdapter {
+    private final UniSimGame game;
     private final AssetManager assetManager;
     private final CursorManager cursorManager;
     private final SpriteBatch batch;
@@ -28,7 +29,8 @@ public class GameScreen extends ScreenAdapter {
     private MapRenderer mapRenderer;
     private final GameTimer gameTimer;
 
-    public GameScreen(AssetManager assetManager, CursorManager cursorManager) {
+    public GameScreen(UniSimGame game, AssetManager assetManager, CursorManager cursorManager) {
+        this.game = game;
         this.assetManager = assetManager;
         this.cursorManager = cursorManager;
         batch = new SpriteBatch();
@@ -70,6 +72,12 @@ public class GameScreen extends ScreenAdapter {
         gameTimer.updateTime(deltaTime);
         gameLogic.update(deltaTime);
         uiStage.act(deltaTime);
+
+        if (gameTimer.isTimeEnded()) {
+            float satisfaction = gameLogic.getSatisfaction();
+            game.setScreen(new EndScreen(game, satisfaction));
+            this.dispose();
+        }
 
         // Render the map.
         mapRenderer.setView(cameraController.getCamera());
