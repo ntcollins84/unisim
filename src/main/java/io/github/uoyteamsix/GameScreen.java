@@ -35,7 +35,7 @@ public class GameScreen extends ScreenAdapter {
         this.cursorManager = cursorManager;
         batch = new SpriteBatch();
         cameraController = new CameraController();
-        gameTimer = new GameTimer(300f, true);
+        gameTimer = new GameTimer(3f, true);
         gameLogic = new GameLogic(gameTimer);
         uiStage = new UiStage(assetManager, gameLogic, gameTimer);
 
