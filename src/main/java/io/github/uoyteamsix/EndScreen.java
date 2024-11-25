@@ -13,13 +13,17 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * A class representing the end screen
+ */
 public class EndScreen extends ScreenAdapter {
     private final UniSimGame game;
     private final float satisfaction;
     SpriteBatch batch;
     Viewport viewport;
     OrthographicCamera camera;
-    BitmapFont font;
+    BitmapFont fontBig;
+    BitmapFont fontSmall;
     Texture endScreen;
 
     public EndScreen(UniSimGame game, float satisfaction) {
@@ -34,12 +38,18 @@ public class EndScreen extends ScreenAdapter {
 
         batch = new SpriteBatch();
 
+        // Create fonts
         var generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/font.ttf"));
-        var parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameters.size = 150;
-        font = generator.generateFont(parameters);
-        font.setColor(Color.BLACK);
+        var parametersBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        var parametersSmall = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parametersBig.size = 150;
+        fontBig = generator.generateFont(parametersBig);
+        fontBig.setColor(Color.BLACK);
+        parametersSmall.size = 75;
+        fontSmall = generator.generateFont(parametersSmall);
+        fontSmall.setColor(Color.BLACK);
 
+        // Set background
         endScreen = new Texture("screens/map-blurred.jpg");
     }
 
@@ -51,14 +61,19 @@ public class EndScreen extends ScreenAdapter {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
-        GlyphLayout glyphLayout = new GlyphLayout();
-        String item = "Game Over";
-        glyphLayout.setText(font, item);
-        float w = glyphLayout.width;
+        // Create game over message
+        GlyphLayout glyphLayoutBig = new GlyphLayout(fontBig, "Game Over");
+        float w1 = glyphLayoutBig.width;
 
+        // Create score display
+        GlyphLayout glyphLayoutSmall = new GlyphLayout(fontSmall, "Score: " + (int) (satisfaction * 100) + "%");
+        float w2 = glyphLayoutSmall.width;
+
+        // Draw assets to screen
         batch.begin();
         batch.draw(endScreen, 0, 0, viewport.getWorldWidth(),viewport.getWorldHeight());
-        font.draw(batch, glyphLayout, (viewport.getWorldWidth() - w)/2, viewport.getWorldHeight() * 0.8f);
+        fontBig.draw(batch, glyphLayoutBig, (viewport.getWorldWidth() - w1)/2, viewport.getWorldHeight() * 0.8f);
+        fontSmall.draw(batch, glyphLayoutSmall, (viewport.getWorldWidth() - w2)/2, viewport.getWorldHeight() * 0.6f);
         batch.end();
     }
 
@@ -68,10 +83,8 @@ public class EndScreen extends ScreenAdapter {
     }
 
     /*
-    TODO:
+    TODO: Leaderboard functionality
     Display:
-    - Score
-        - adding second font seems to kill both of them, fix needed for that
     - "Submit score to leaderboard" area
     - Leaderboard
 
