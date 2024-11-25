@@ -68,6 +68,7 @@ public class GameLogic {
         var accommodationPrefab = findPrefab("Accommodation");
         var canteenPrefab = findPrefab("Canteen");
         var recreationPrefab = findPrefab("Recreation");
+        var recreation2Prefab = findPrefab("Recreation2");
         var studyPrefab = findPrefab("Study");
 
         // Work out the number of students based on how many accommodation buildings there are.
@@ -103,8 +104,9 @@ public class GameLogic {
         }
 
         // Decay satisfaction based on a rate determined by the amount of recreation buildings.
+        // Calculation now accounts for second recreation building type
         float decayRate = 0.035f;
-        decayRate -= gameMap.getBuildingCount(recreationPrefab) / 500.0f;
+        decayRate -= (gameMap.getBuildingCount(recreationPrefab) + gameMap.getBuildingCount(recreation2Prefab)) / 500.0f;
         satisfaction -= Math.max(decayRate, 0.015f) * deltaTime;
 
         // Handle event effects
