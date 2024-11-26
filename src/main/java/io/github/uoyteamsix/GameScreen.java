@@ -73,12 +73,6 @@ public class GameScreen extends ScreenAdapter {
         gameLogic.update(deltaTime);
         uiStage.act(deltaTime);
 
-        if (gameTimer.isTimeEnded()) {
-            float satisfaction = gameLogic.getSatisfaction();
-            game.setScreen(new EndScreen(game, satisfaction));
-            this.dispose();
-        }
-
         // Render the map.
         mapRenderer.setView(cameraController.getCamera());
         mapRenderer.render();
@@ -89,7 +83,11 @@ public class GameScreen extends ScreenAdapter {
         // Render the UI last.
         uiStage.draw();
 
-        System.out.println(gameLogic.getSatisfaction());
+        // When game ends go to end screen
+        if (gameTimer.isTimeEnded()) {
+            float satisfaction = gameLogic.getSatisfaction();
+            game.setScreen(new EndScreen(game, satisfaction));
+        }
     }
 
     /**
@@ -153,8 +151,9 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
     }
 
+    // Disposal of assets moved to hide method
     @Override
-    public void dispose() {
+    public void hide() {
         batch.dispose();
         uiStage.dispose();
     }
